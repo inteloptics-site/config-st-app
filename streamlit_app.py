@@ -533,85 +533,84 @@ with mtabs[4]:
         stab1, stab2 = st.tabs(["Конфигурация", "Коррекция",])
 
         with stab1:
-            # st.write("``Настройка алгоритма обработки данных:``")
-            st.write('`Настройка алгоритма DSP`')
-            df = pd.DataFrame(
-                {
-                    "Параметр": [
-                        "ФНЧ 16 кГц",
-                        "ФНЧ 5 кГц",
-                        "ФНЧ 2.5 кГц",
-                        "Вычитание пост.сост",
-                        "Работа с синхроимпульсом",
-                        "Фаз.коррекция усилителя",
-                        "Фаз.коррекция SYNC",
-                        "Коррекция выбросов",
-                        "Коррекция полиномом",
-                        "Постоянное напряжение",
 
-                        ],
-                    "Фаза А": [False, False, False, False, False, False, True, False, False, False,],
-                    "Фаза В": [False, False, False, False, False, False, True, False, False, False,],
-                    "Фаза С": [False, False, False, False, False, False, True, False, False, False,],
-                },
-            )
+            subcols = st.columns(2)
+            with subcols[0]:
+                # st.write("``Настройка алгоритма обработки данных:``")
+                st.write('`Настройка алгоритма DSP`')
+                df = pd.DataFrame(
+                    {
+                        "Параметр": [
+                            "ФНЧ 16 кГц",
+                            "ФНЧ 5 кГц",
+                            "ФНЧ 2.5 кГц",
+                            "Вычитание пост.сост",
+                            "Работа с синхроимпульсом",
+                            "Фаз.коррекция усилителя",
+                            "Фаз.коррекция SYNC",
+                            "Коррекция выбросов",
+                            "Коррекция полиномом",
+                            "Постоянное напряжение",
 
-            st.data_editor(
-                df,
-                column_config={
-                    "Фаза А": st.column_config.CheckboxColumn(),
-                    "Фаза В": st.column_config.CheckboxColumn(),
-                    "Фаза С": st.column_config.CheckboxColumn(),
-                },
-                hide_index=True,
-                width="stretch",
-                height="content"
-            )
+                            ],
+                        "Фаза А": [False, False, False, False, False, False, True, False, False, False,],
+                        "Фаза В": [False, False, False, False, False, False, True, False, False, False,],
+                        "Фаза С": [False, False, False, False, False, False, True, False, False, False,],
+                    },
+                )
 
-            st.write('`Настройка алгоритма ARM`')
+                st.data_editor(
+                    df,
+                    column_config={
+                        "Фаза А": st.column_config.CheckboxColumn(),
+                        "Фаза В": st.column_config.CheckboxColumn(),
+                        "Фаза С": st.column_config.CheckboxColumn(),
+                    },
+                    hide_index=True,
+                    width="stretch",
+                    height="content"
+                )
 
-            df = pd.DataFrame(
-                {
-                    "Параметр": [
-                        "Коррекция по температуре ВМ",
-                        "Коррекция по температуре колонны",
-                        "Коррекция смещения по напряжению",
-                        "Коррекция смещения АЦП",
+            with subcols[1]:
+                st.write('`Настройка алгоритма ARM`')
 
-                        ],
-                    "Фаза А": [False, True, False, True,],
-                    "Фаза В": [False, True, False, True,],
-                    "Фаза С": [False, True, False, True,],
-                },
-            )
+                df = pd.DataFrame(
+                    {
+                        "Параметр": [
+                            "Коррекция по температуре ВМ",
+                            "Коррекция по температуре колонны",
+                            "Коррекция смещения по напряжению",
+                            "Коррекция смещения АЦП",
 
-            st.data_editor(
-                df,
-                column_config={
-                    "Фаза А": st.column_config.CheckboxColumn(),
-                    "Фаза В": st.column_config.CheckboxColumn(),
-                    "Фаза С": st.column_config.CheckboxColumn(),
-                },
-                hide_index=True,
-                width="stretch",
-                height="content"
-            )
+                            ],
+                        "Фаза А": [False, True, False, True,],
+                        "Фаза В": [False, True, False, True,],
+                        "Фаза С": [False, True, False, True,],
+                    },
+                )
 
-            st.write('`Настройка источника температуры`')
+                st.data_editor(
+                    df,
+                    column_config={
+                        "Фаза А": st.column_config.CheckboxColumn(),
+                        "Фаза В": st.column_config.CheckboxColumn(),
+                        "Фаза С": st.column_config.CheckboxColumn(),
+                    },
+                    hide_index=True,
+                    width="stretch",
+                    height="content"
+                )
 
-            row = st.container(horizontal=True)
-            with row:
-                st.selectbox('Фаза А', ['По умолчанию', 'Фаза А','Фаза В','Фаза С'])
-                st.selectbox('Фаза В', ['По умолчанию', 'Фаза А','Фаза В','Фаза С'])
-                st.selectbox('Фаза С', ['По умолчанию', 'Фаза А','Фаза В','Фаза С'])
+                st.write('`Настройка источника температуры`')
 
-            st.space('small')
+                row = st.container(horizontal=True)
+                with row:
+                    st.selectbox('Фаза А', ['По умолчанию', 'Фаза А','Фаза В','Фаза С'])
+                    st.selectbox('Фаза В', ['По умолчанию', 'Фаза А','Фаза В','Фаза С'])
+                    st.selectbox('Фаза С', ['По умолчанию', 'Фаза А','Фаза В','Фаза С'])
+
+            # st.space('small')
             # st.write('---')
-
-            row = st.container(horizontal=True)
-            with row:
-                st.button('Считать параметры', key='volt_read_btn', width='stretch')
-                st.button('Записать параметры', key='volt_set_btn', width='stretch')
 
         with stab2:
             with st.container(height=700, border=False):
@@ -818,10 +817,10 @@ with mtabs[4]:
 
             # st.button('Записать параметры', key='volt_params_phase_btn')
             # st.space('xxsmall')
-            row = st.container(horizontal=True)
-            with row:
-                st.button('Считать параметры', key='volt_cor_read_btn', width='stretch')
-                st.button('Записать параметры', key='volt_cor_set_btn', width='stretch')
+            # row = st.container(horizontal=True)
+            # with row:
+            #     st.button('Считать параметры', key='volt_cor_read_btn', width='stretch')
+            #     st.button('Записать параметры', key='volt_cor_set_btn', width='stretch')
 
 
     with c2:
@@ -860,7 +859,7 @@ with mtabs[4]:
     with c3:
         st.write('``Дашборд:``')
 
-        with st.container(height=800, border=False):
+        with st.container(height=700, border=False):
             options = ["Фаза А", "Фаза В", "Фаза С", ]
             selection = st.pills("Фазы:", options, key='verticalbar_volt', selection_mode="multi", default=["Фаза С"])
             
@@ -876,6 +875,14 @@ with mtabs[4]:
             st.metric(
                 "Температура ВМ", round(changes[-1],3), delta, chart_data=data, chart_type="line", border=True
         )
+
+    c1, c2, c3 = st.columns([3,1.5,1], gap="small", border=True)
+    with c1:
+        row = st.container(horizontal=True)
+        with row:
+            st.button('Записать ', key='volt_set_btn', width='stretch')
+            st.button('Считать', key='volt_read_btn', width='stretch')
+            st.button('Считать из резерва', key='volt_read_from_reserv_btn', width='stretch')
 
 with mtabs[5]:
     c1, c2, c3 = st.columns([3,1.5,1], gap="small", border=True)
@@ -905,13 +912,6 @@ with mtabs[5]:
             width="stretch",
             height="content"
         )
-
-        st.space('xxsmall')
-        row = st.container(horizontal=True)
-        with row:
-            st.button('Считать параметры', key='termo_params_read_btn', width='stretch')
-            st.button('Считать параметры из резерва', key='termo_params_reserv_read_btn', width='stretch')
-            st.button('Записать параметры', key='termo_params_set_btn', width='stretch')
 
         st.write("`Калибровка:`")
 
@@ -1005,6 +1005,15 @@ with mtabs[5]:
                 "ТК", round(changes[-1],3), delta, chart_data=data, chart_type="bar", border=True
         )
 
+    c1, c2, c3 = st.columns([3,1.5,1], gap="small", border=True)
+    with c1:
+    #    st.space('xxsmall')
+        row = st.container(horizontal=True)
+        with row:
+            st.button('Записать', key='termo_params_set_btn', width='stretch')
+            st.button('Считать', key='termo_params_read_btn', width='stretch')
+            st.button('Считать из резерва', key='termo_params_reserv_read_btn', width='stretch')
+
 with mtabs[6]:
     c1, c2, c3 = st.columns([3,1.5,1], gap="small", border=True)
 
@@ -1060,13 +1069,7 @@ with mtabs[6]:
             width="stretch",
             height="content"
         )
-
-        row = st.container(horizontal=True,)
-        with row:
-            st.button('Записать параметры', key='volt_adc_write_btn', width='stretch')
-            st.button('Считать параметры', key='volt_adc_params_read_btn', width='stretch')
-            st.button('Считать параметры из резерва', key='volt_adc_params_reserv_read_btn', width='stretch')
-            
+          
     with c2:
         st.write("`Диагностические параметры:`")
 
@@ -1095,7 +1098,7 @@ with mtabs[6]:
 
     with c3:
         st.write("`Дашборд:`")
-        with st.container(height=800, border=False):
+        with st.container(height=700, border=False):
             options = ["Фаза А", "Фаза В", "Фаза С", ]
             selection = st.pills("Фазы:", options, key='verticalbar_volt_adc', selection_mode="multi", default=["Фаза С"])
             
@@ -1111,6 +1114,14 @@ with mtabs[6]:
             st.metric(
                 "Ошибки", round(changes[-1],3), delta, chart_data=data, chart_type="bar", border=True
         )
+            
+    c1, c2, c3 = st.columns([3,1.5,1], gap="small", border=True)
+    with c1:
+        row = st.container(horizontal=True,)
+        with row:
+            st.button('Записать', key='volt_adc_write_btn', width='stretch')
+            st.button('Считать', key='volt_adc_params_read_btn', width='stretch')
+            st.button('Считать из резерва', key='volt_adc_params_reserv_read_btn', width='stretch')
 
 with mtabs[7]:
 
