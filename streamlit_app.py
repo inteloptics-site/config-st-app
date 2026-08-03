@@ -93,7 +93,310 @@ with row:
     st.button('Заблокировать поля', key='general_close_btn',)
     st.button('Разблокировать поля', key='general_open_btn',)
 
-mtabs = st.tabs(["Общие данные", "Конфигурация", "Прошивки", "Модуль тока", "Модуль напряжения", "Модуль термометра", "Модуль оцифровки напряжения", "Модуль аналоговых выходов", "Самописец", "Дашборд"])
+mtabs = st.tabs(["Общие данные и Конфигурация", "Конфигурация", "Прошивки", "Модуль тока", "Модуль напряжения", "Модуль термометра", "Модуль оцифровки напряжения", "Модуль аналоговых выходов", "Самописец", "Дашборд"])
+
+with mtabs[0]:
+
+    cols = st.columns([2,5.5,3], border=False)
+    # cols = st.columns([1,1,1,1], border=True)
+
+    with cols[0]:
+        with st.container(border=True, height='stretch', vertical_alignment='distribute'):
+            st.caption('`Информация о приборе:`')
+
+            # with st.container(border=False, horizontal=True,):
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Тип трансформатора")
+            with cs[1]:
+                st.text_input("Тип трансформатора", value="ТОМ-110", key="transformer_type", label_visibility="collapsed",)
+
+            # with st.container(border=False, horizontal=True,):
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер трансформатора")
+            with cs[1]:
+                st.text_input("Зав. номер трансформатора", value="123456", key="transformer_sn", label_visibility="collapsed")
+
+            # with st.container(border=False, horizontal=True):
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер ЧЭ/колонны Фаза А")
+            with cs[1]:
+                st.text_input("Зав. номер ЧЭ/колонны Фаза А", value="001", key="ce_sn_A", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер ЧЭ/колонны Фаза В")
+            with cs[1]:
+                st.text_input("Зав. номер ЧЭ/колонны Фаза В", value="002", key="ce_sn_B", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер ЧЭ/колонны Фаза С")
+            with cs[1]:
+                st.text_input("Зав. номер ЧЭ/колонны Фаза С", value="003", key="ce_sn_C", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер кросс-платы")
+            with cs[1]:
+                st.text_input("Зав. номер кросс-платы", value="CP-1001", key="crossboard_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер платы MУ")
+            with cs[1]:
+                st.text_input("Зав. номер платы MУ", value="MU-4001", key="mu_board_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер платы клавиатуры")
+            with cs[1]:
+                st.text_input("Зав. номер платы клавиатуры", value="KB-3001", key="keyboard_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер платы клеммников")
+            with cs[1]:
+                st.text_input("Зав. номер платы клеммников", value="TB-2001", key="termboard_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер модуля ЕОМ Фаза A")
+            with cs[1]:
+                st.text_input("Зав. номер модуля ЕОМ Фаза A", value="EOM_A_SN", key="eom_a_module_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер модуля ЕОМ Фаза В")
+            with cs[1]:
+                st.text_input("Зав. номер модуля ЕОМ Фаза В", value="EOM_B_SN", key="eom_b_module_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер модуля ЕОМ Фаза С")
+            with cs[1]:
+                st.text_input("Зав. номер модуля ЕОМ Фаза С", value="EOM_C_SN", key="eom_c_module_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Зав. номер модуля термометра")
+            with cs[1]:
+                st.text_input("Зав. номер модуля термометра", value="THERM_SN", key="therm_module_sn", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Название подстанции")
+            with cs[1]:
+                st.text_input("Название подстанции", value="ПС 110 кВ", key="substation_name", label_visibility="collapsed")
+
+            cs = st.columns([1,1])
+            with cs[0]:
+                st.caption("Тип присоединения")
+            with cs[1]:
+                st.text_input("Тип присоединения", value="ВЛ 110 кВ", key="connection_type", label_visibility="collapsed")
+
+
+    with cols[1]:
+
+        scls = st.columns(2)
+
+        with scls[0]:
+            with st.container(border=True):
+                # ========================== Установленные платы ==========================
+                st.caption('`Установленные электронные модули:`')
+
+                df = pd.DataFrame(
+                    {
+                        "Параметр": [
+                            "Установлена плата EОМ",
+                            "Установлена плата Напряжения",
+                            "Установлена плата InterАDС",
+                            ],
+                        "Фаза А": [False,False,False,],
+                        "Фаза В": [False,False,False,],
+                        "Фаза С": [True,False,False,],
+                    },
+                )
+
+                st.data_editor(
+                    df,
+                    column_config={
+                        "Фаза А": st.column_config.CheckboxColumn(default=False,),
+                        "Фаза В": st.column_config.CheckboxColumn(default=False,),
+                        "Фаза С": st.column_config.CheckboxColumn(default=False,),
+                    },
+                    hide_index=True,
+                    width="stretch",
+                    height="content"
+                )
+
+                sscols = st.columns(2)
+
+                with sscols[0]:
+                    st.checkbox("Установлена плата термометра")
+                    st.checkbox("Установлен внешний термометр")
+
+                with sscols[1]:
+                    st.checkbox("Установлена плата МО")
+                    st.checkbox("Установлена плата 61850")
+
+        
+            with st.container(border=True):
+                st.caption('`Системные флаги:`')
+
+                sscols = st.columns(2)
+
+                with sscols[0]:
+                    st.checkbox("Использовать данные 61850")
+                    st.checkbox("Включить контроль RMS 61850")
+                    st.checkbox("Используется ЦАПТ")
+
+                with sscols[1]:
+                    st.checkbox("Скрыть хэш-сумму прошивки")
+                    st.checkbox("Демонстрационный режим")
+                    st.checkbox("Режим отладки АБТ")
+
+                st.checkbox("Обмен данными температуры колонны между блоками")
+                st.checkbox("Использовать двуцветные светодиоды как одноцветные (Светофор)")
+
+
+            with st.container(border=True):
+                st.caption('`Питание:`')
+
+                st.checkbox("Используется мониторинг питания")
+                st.checkbox("Используется резервное питание")
+                st.checkbox("Мониторинг по внутреннему питанию")
+
+
+            with st.container(border=True, height='stretch'):
+                st.caption('`Разрешения:`')
+
+                st.checkbox("Разрешить управление аналаговыми выходами")
+                st.checkbox("Разрешить суммирование токов на клеммниках")
+                st.checkbox("Разрешить изменение количества витков пользователем")
+
+
+        with scls[1]:
+            with st.container(border=True):
+                st.caption('`Единицы измерения:`')
+
+                st.checkbox("Использовать килоамперы для вывода в меню")
+                st.checkbox("Использовать киловольты для вывода в меню")
+                st.checkbox("Автомасштабирование значений тока (амперы/килоамперы)")
+                st.checkbox("Автомасштабирование значений напряжения (вольты/киловольты)")
+                st.checkbox("Отображать температуру от термометра в градусах Цельсия")
+
+            with st.container(border=True):
+                st.caption('`Отображение данных в меню:`')
+
+                st.checkbox("Скрыть меню настроек в главном меню прибора")
+                st.checkbox("Скрыть дату и время из меню")
+                st.checkbox("Отображать пользовательский коэффициент в главном меню прибора")
+                st.checkbox("Отображать статусы журналов и авторизации в меню прибора")
+                st.checkbox("Реле Иркутских клеммников выводит только превышение тока")
+
+            with st.container(border=True, height='stretch'):
+                st.caption('`Управление диагностикой:`')
+
+                df = pd.DataFrame(
+                    {
+                        "Параметр": [
+                            "Игнорировать диагностику температуры EОМ ",
+                            ],
+                        "Фаза А": [False,],
+                        "Фаза В": [False,],
+                        "Фаза С": [True,],
+                    },
+                )
+
+                st.data_editor(
+                    df,
+                    column_config={
+                        "Фаза А": st.column_config.CheckboxColumn(default=False,),
+                        "Фаза В": st.column_config.CheckboxColumn(default=False,),
+                        "Фаза С": st.column_config.CheckboxColumn(default=False,),
+                    },
+                    hide_index=True,
+                    width="stretch",
+                    height="content"
+                )
+
+                st.checkbox("Игнорировать диагностику синхронизации 61850")
+                st.checkbox("Игнорировать диагностику флагов напряжения")
+                st.checkbox("Игнорировать диагностику лазерного излучателя")
+                st.checkbox("Игнорировать диагностику температуру колонны (напряжение)")
+                st.checkbox("Игнорировать диагностику датчика влажности (напряжение)")
+                st.checkbox("Отключить отображение диагностики Транснефть (напряжение)")
+
+    with cols[2]:
+    # ========================== Источники температуры и CAN ==========================
+        with st.container(border=False, horizontal=True, vertical_alignment='bottom'):
+            st.selectbox("Язык интерфейса меню", [])
+            st.write('Версия протокола `1`')
+            st.write('Релиз протокола `1`')
+
+        with st.container(border=True):
+            st.selectbox("Тип клеммников", [])
+
+            with st.container(border=False, horizontal=True):
+                st.selectbox("Тип излучателя ИРЭ-ПОЛЮС", ["Тип 1", "Тип 2", "Тип 3"], key="emitter_type")
+                st.selectbox("Выбор режима работы внешнего CAN", ["Выключен", "Шина 1", "Шина 2"], key="ext_can_mode")
+
+            with st.container(border=False, horizontal=True):
+                st.selectbox("Протокол 61850", [])
+                st.selectbox("Адрес устройсва Modbus", [])
+
+            with st.container(border=False, horizontal=True):
+                st.selectbox("Источник темп-ры ЕОМ Фаза А", ["Внутренний", "Внешний 1", "Внешний 2"], key="temp_src_eom_A")
+                st.selectbox("Источник темп-ры ЕОМ Фаза В", ["Внутренний", "Внешний 1", "Внешний 2"], key="temp_src_bom_B")
+                st.selectbox("Источник темп-ры ЕОМ Фаза С", ["Внутренний", "Внешний 1", "Внешний 2"], key="temp_src_eom_C")
+
+    # ========================== Псевдонимы ==========================
+        with st.container(border=True):
+            with st.container(border=False, horizontal=True):
+                st.text_input("Псевдоним Фазы А Ток", value="IA", key="alias_IA")
+                st.text_input("Псевдоним Фазы В Ток", value="IB", key="alias_IB")
+                st.text_input("Псевдоним Фазы С Ток", value="IC", key="alias_IC")
+
+            with st.container(border=False, horizontal=True):
+                st.text_input("Псевдоним Фазы А Напряжение", value="UA", key="alias_UA")
+                st.text_input("Псевдоним Фазы В Напряжение", value="UB", key="alias_UB")
+                st.text_input("Псевдоним Фазы С Напряжение", value="UC", key="alias_UC")
+
+            with st.container(border=False, horizontal=True):
+                st.text_input("Псевдоним Фазы А InterADC", value="IADC_A", key="alias_iadc_A")
+                st.text_input("Псевдоним Фазы В InterADC", value="IADC_B", key="alias_iadc_B")
+                st.text_input("Псевдоним Фазы С InterADC", value="IADC_C", key="alias_iadc_C")
+                st.text_input("Псевдоним Фазы N InterADC", value="IADC_N", key="alias_iadc_N")
+
+        with st.container(border=True, height='stretch'):
+            with st.container(border=False, horizontal=True):
+                st.number_input("Ном.напряжения питания, В",)
+                st.number_input("Порог срабатывания",)
+                st.number_input("Длительность скользящего окна",)
+            # ========================== Журналы ==========================
+
+            with st.container(border=False, horizontal=True):
+                st.number_input("Уровень журнала безопасности,%", min_value=0, max_value=100, value=80, step=1, key="security_log_level")
+                st.number_input("Уровень журнала опериций,%", min_value=0, max_value=100, value=80, step=1, key="oper_log_level")
+                st.number_input("RMS Уровень срабатывания", min_value=0, max_value=100, value=80, step=1, )
+                st.number_input("RMS Минимального напряжения", min_value=0, max_value=100, value=80, step=1,)
+
+    cols = st.columns([2,8.5], border=False)
+
+    with cols[0]:
+        with st.container(border=False, horizontal=True):
+            st.button("Считать", width="stretch")
+            st.button("Записать", width="stretch")
+
+    with cols[1]:
+        with st.container(border=False, horizontal=True, horizontal_alignment='right'):
+            st.button("Заблокировать запись конфигурации", width="content")
+            st.button("Записать конфигурацию", width="content")
+            st.button("Считать конфигурацию", width="content")
+
 
 with mtabs[3]:
 
